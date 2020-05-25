@@ -1,6 +1,11 @@
 ## TODO:
 ##   Learn CMake
 ##
+
+CPPFLAGS = -g
+LDFLAGS = -g
+LDLIBS =
+
 all: ringbuf.o test.o
 	g++ test.o ringbuf.o
 
