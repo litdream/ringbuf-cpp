@@ -13,7 +13,7 @@
 
 class RingBuf
 {
- public:
+public:
 	RingBuf(int ring_len);
 	~RingBuf();
 
@@ -29,11 +29,11 @@ class RingBuf
 	// For debug Only;
 	void Print();
 	
- protected:
-	std::unique_ptr<std::string[]> buf;
+protected:
+	const std::size_t ring_len;
 	std::size_t iadv;
 	std::size_t ifol;
-	const std::size_t ring_len;
+	std::unique_ptr<std::string[]> buf;
 };
 
 #endif  /* __RAY_RINGBUF_H */
