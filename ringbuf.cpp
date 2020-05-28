@@ -10,17 +10,28 @@ RingBuf::~RingBuf()
 {
 }
 
-void RingBuf::put(std::string item)
+bool RingBuf::put(std::string item)
 {
-	buf[iadv] = item;
-	iadv = (iadv + 1) % ring_len;
+	if ( ! this->isFull()) {
+		buf[iadv] = item;
+		iadv = (iadv + 1) % ring_len;
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 std::string RingBuf::get()
 {
-	std::string rtn = buf[ifol];
-	ifol = (ifol + 1) % ring_len;
-	return rtn;
+	if ( ! this->isEmpty()) {
+		std::string rtn = buf[ifol];
+		ifol = (ifol + 1) % ring_len;
+		return rtn;
+	}
+	else {
+		return "";
+	}
 }
 
 std::string RingBuf::peek()

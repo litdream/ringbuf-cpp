@@ -17,7 +17,7 @@ public:
 	RingBuf(int ring_len);
 	~RingBuf();
 
-	void put(std::string item);
+	bool put(std::string item);
 	std::string get();
 	std::string peek();
 	
