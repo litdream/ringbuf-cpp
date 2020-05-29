@@ -1,5 +1,6 @@
 #include "ringbuf.h"
 #include <iostream>
+#include <sstream>
 
 RingBuf::RingBuf(int len) : ring_len(len+1), iadv(0), ifol(0),
 			    buf(std::unique_ptr<std::string[]>(new std::string[len+1]))
@@ -8,6 +9,11 @@ RingBuf::RingBuf(int len) : ring_len(len+1), iadv(0), ifol(0),
 
 RingBuf::~RingBuf()
 {
+}
+
+static inline void rtrim(std::string &s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(),
+            std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
 }
 
 bool RingBuf::put(std::string item)
@@ -51,12 +57,12 @@ bool RingBuf::isFull() const
 
 size_t RingBuf::capacity() const
 {
-	return ring_len;
+	return ring_len-1;
 }
 
 size_t RingBuf::size() const
 {
-	if (iadv > ifol)
+	if (iadv >= ifol)
 		return iadv - ifol;
 	else
 		return iadv + ring_len - ifol;
@@ -66,10 +72,18 @@ size_t RingBuf::size() const
 // DEBUG only
 void RingBuf::Print()
 {
+	std::cout << this->toString() << std::endl;
+}
+
+std::string RingBuf::toString()
+{
+	std::ostringstream sstr;
 	int itr = ifol;
 	while (itr != iadv) {
-		std::cout << "[" << buf[itr] << "] ";
+		sstr << "[" << buf[itr] << "] ";
 		itr = (itr+1) % ring_len;
 	}
-	std::cout << std::endl;
+	std::string rtn = sstr.str();
+	rtrim(rtn);
+	return rtn;
 }

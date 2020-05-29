@@ -28,6 +28,7 @@ public:
 
 	// For debug Only;
 	void Print();
+	std::string toString();
 	
 protected:
 	const std::size_t ring_len;
