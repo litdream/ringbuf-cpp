@@ -1,6 +1,7 @@
 #include "ringbuf.h"
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 RingBuf::RingBuf(int len) : ring_len(len+1), iadv(0), ifol(0),
 			    buf(std::unique_ptr<std::string[]>(new std::string[len+1]))
