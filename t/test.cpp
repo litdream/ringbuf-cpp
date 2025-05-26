@@ -1,6 +1,6 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "../ringbuf.h"
+#include "../ringbuf.hpp"
 #include <string>
 
 TEST_CASE( "Ringbuf empty case", "[ringbuf]") {
@@ -56,5 +56,5 @@ TEST_CASE( "Ringbuf empty case", "[ringbuf]") {
 		REQUIRE( buf.size() == 1 );
 		REQUIRE( buf.toString() == "[Hello]");
 	}
-	
+
 }

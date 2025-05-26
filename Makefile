@@ -5,11 +5,11 @@
 CPPFLAGS = -g
 LDFLAGS = -g
 LDLIBS =
-CXX = g++ -std=c++11
+CXX = g++ -std=c++20
 all: ringbuf.o test.o
 	$(CXX) test.o ringbuf.o
 
-ringbuf.o: 
+ringbuf.o:
 test.o:  ringbuf.o
 
 .PHONY: clean test

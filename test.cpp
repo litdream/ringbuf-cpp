@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ringbuf.h"
+#include "ringbuf.hpp"
 
 using std::cout;
 using std::endl;
@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	cout << "Empty should be false: " << buf.isEmpty() << endl;
 	cout << "Full should be false: " << buf.isFull() << endl;
 	buf.Print();
-	
+
 	buf.put(string("Home"));
 	cout << "Full should be true: " << buf.isFull() << endl;
 	buf.Print();
@@ -34,8 +34,8 @@ int main(int argc, char **argv)
 		std::cerr << "Full buf should not take element." << endl;
 		return 1;
 	}
-	cout << "should be 'Helo': " << buf.peek() << endl;    
-	buf.Print();   
+	cout << "should be 'Helo': " << buf.peek() << endl;
+	buf.Print();
 
 	cout << buf.get() << endl;
 	buf.Print();
@@ -53,6 +53,6 @@ int main(int argc, char **argv)
 	cout << "-------------------------" << endl;
 	buf.put("Hello");     // This is (const char *)!
 	buf.Print();
-	
+
 	return 0;
 }

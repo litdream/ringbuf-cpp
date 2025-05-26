@@ -1,7 +1,9 @@
-#include "ringbuf.h"
+#include "ringbuf.hpp"
 #include <iostream>
 #include <sstream>
-#include <algorithm>
+#include <algorithm> // For std::find_if
+#include <string>    // For std::string
+#include <cctype>    // For std::isspace
 
 RingBuf::RingBuf(int len) : ring_len(len+1), iadv(0), ifol(0),
 			    buf(std::unique_ptr<std::string[]>(new std::string[len+1]))
@@ -13,8 +15,9 @@ RingBuf::~RingBuf()
 }
 
 static inline void rtrim(std::string &s) {
-    s.erase(std::find_if(s.rbegin(), s.rend(),
-            std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch){
+        return !std::isspace(ch);
+    }).base(), s.end());
 }
 
 bool RingBuf::put(std::string item)
@@ -85,6 +88,6 @@ std::string RingBuf::toString()
 		itr = (itr+1) % ring_len;
 	}
 	std::string rtn = sstr.str();
-	rtrim(rtn);
+	rtrim(rtn); // Apply trimming
 	return rtn;
 }
