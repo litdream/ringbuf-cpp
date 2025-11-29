@@ -10,6 +10,7 @@
 //
 #include <string>
 #include <memory>
+#include <optional>
 
 class RingBuf
 {
@@ -17,9 +18,9 @@ public:
 	RingBuf(int ring_len);
 	~RingBuf();
 
-	bool put(std::string item);
-	std::string get();
-	std::string peek();
+	bool put(const std::string& item);
+	std::optional<std::string> get();
+	std::optional<std::string> peek() const;
 	
 	bool isEmpty() const;
 	bool isFull() const;

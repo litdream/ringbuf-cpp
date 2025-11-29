@@ -20,7 +20,7 @@ static inline void rtrim(std::string &s) {
     }).base(), s.end());
 }
 
-bool RingBuf::put(std::string item)
+bool RingBuf::put(const std::string& item)
 {
 	if ( ! this->isFull()) {
 		buf[iadv] = item;
@@ -32,7 +32,7 @@ bool RingBuf::put(std::string item)
 	}
 }
 
-std::string RingBuf::get()
+std::optional<std::string> RingBuf::get()
 {
 	if ( ! this->isEmpty()) {
 		std::string rtn = buf[ifol];
@@ -40,12 +40,15 @@ std::string RingBuf::get()
 		return rtn;
 	}
 	else {
-		return "";
+		return std::nullopt;
 	}
 }
 
-std::string RingBuf::peek()
+std::optional<std::string> RingBuf::peek() const
 {
+	if (this->isEmpty()) {
+		return std::nullopt;
+	}
 	return buf[ifol];
 }
 
